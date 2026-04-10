@@ -3,7 +3,7 @@ const translations = {
 
   ka: {
     headerSubtitle: "ერთად ვებრძოლოთ დიუშენს",
-    nav1: "ჩვენ შესახებ", nav2: "მისია", nav3: "პრეპარატები", nav4: "რესურსები", nav5: "კონტაქტი",
+    nav1: "ჩვენ შესახებ", nav2: "მისია", nav3: "პრეპარატები", nav4: "რესურსები", nav5: "კონტაქტი", nav6: "სიახლეები",
     heroBadge: "DMD Georgia • პაციენტთა და მშობელთა გაერთიანება",
     heroTitle: "ერთად ვებრძოლოთ დიუშენის კუნთოვან დისტროფიას",
     heroText: "დიუშენის კუნთოვანი დისტროფია (DMD) იშვიათი გენეტიკური დაავადებაა, რომელიც იწვევს კუნთების თანდათანოვან სუსტებასა და განლევას.",
@@ -53,7 +53,7 @@ const translations = {
     legalTitle: "იურიდიული ინფორმაცია",
     legalFormLabel: "ფორმა", legalIdLabel: "ID ნომერი", legalDateLabel: "რეგისტრაცია",
     legal1: "არაკომერციული იურიდიული პირი", legal2: "400419221", legal3: "27/01/2025",
-    footerFb: "Facebook ჯგუფი",
+    footerFb: "Facebook ჯგუფი", newsTag: "სიახლეები", newsTitle: "ახალი ამბები", newsAllLink: "ყველა სიახლე →",
     donateTitle: "მხარი დაუჭირე ჩვენ",
     donateDesc: "თქვენი შემოწირულობა ეხმარება DMD-ით დაავადებულ ოჯახებს — ინფორმაციის მიღებაში, სამედიცინო დახმარებასა და საზოგადოების ცნობიერების ამაღლებაში.",
     bankLabel: "ბანკი", bankAddrLabel: "მისამართი",
@@ -63,7 +63,7 @@ const translations = {
 
   en: {
     headerSubtitle: "Together Against Duchenne",
-    nav1: "About", nav2: "Mission", nav3: "Treatments", nav4: "Resources", nav5: "Contact",
+    nav1: "About", nav2: "Mission", nav3: "Treatments", nav4: "Resources", nav5: "Contact", nav6: "News",
     heroBadge: "DMD Georgia • Parents and patient association",
     heroTitle: "Together Against Duchenne Muscular Dystrophy",
     heroText: "Duchenne Muscular Dystrophy (DMD) is a rare genetic disorder that causes progressive muscle weakness and degeneration.",
@@ -111,7 +111,7 @@ const translations = {
     legalTitle: "Legal information",
     legalFormLabel: "Form", legalIdLabel: "ID number", legalDateLabel: "Registration",
     legal1: "Non-Commercial Legal Entity", legal2: "400419221", legal3: "27/01/2025",
-    footerFb: "Facebook Group",
+    footerFb: "Facebook Group", newsTag: "News", newsTitle: "Latest News", newsAllLink: "All news →",
     donateTitle: "Support our mission",
     donateDesc: "Your donation helps DMD-affected families access information, medical support, and raises public awareness about this rare disease.",
     bankLabel: "Bank", bankAddrLabel: "Address",
@@ -121,7 +121,7 @@ const translations = {
 
   ru: {
     headerSubtitle: "Вместе против Дюшенна",
-    nav1: "О нас", nav2: "Миссия", nav3: "Препараты", nav4: "Ресурсы", nav5: "Контакты",
+    nav1: "О нас", nav2: "Миссия", nav3: "Препараты", nav4: "Ресурсы", nav5: "Контакты", nav6: \"Новости\",
     heroBadge: "DMD Georgia • Объединение родителей и пациентов",
     heroTitle: "Вместе против мышечной дистрофии Дюшенна",
     heroText: "Мышечная дистрофия Дюшенна (DMD) — редкое генетическое заболевание, вызывающее прогрессирующую слабость и разрушение мышц.",
@@ -169,7 +169,7 @@ const translations = {
     legalTitle: "Юридическая информация",
     legalFormLabel: "Форма", legalIdLabel: "ID номер", legalDateLabel: "Регистрация",
     legal1: "Некоммерческое юридическое лицо", legal2: "400419221", legal3: "27/01/2025",
-    footerFb: "Facebook Group",
+    footerFb: "Facebook Group", newsTag: "Новости", newsTitle: "Последние новости", newsAllLink: "Все новости →",
     donateTitle: "Поддержите нашу миссию",
     donateDesc: "Ваше пожертвование помогает семьям с DMD — получать информацию, медицинскую помощь и повышать осведомлённость общества об этом редком заболевании.",
     bankLabel: "Банк", bankAddrLabel: "Адрес",
@@ -194,6 +194,7 @@ function setLang(lang) {
   });
   document.documentElement.lang = lang;
   localStorage.setItem('dmd_lang', lang);
+  if (typeof NEWS !== 'undefined') renderNewsPreview(lang);
 }
 
 /* ── Drug filter ── */
@@ -207,7 +208,10 @@ function filterDrugs(status, btn) {
 
 /* ── Mobile menu ── */
 function toggleMenu() {
-  document.getElementById('mainNav').classList.toggle('open');
+  const nav = document.getElementById('mainNav');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('is-open');
 }
 
 /* ── Donate modal ── */
@@ -261,4 +265,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.4 });
   sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+
+  // Render news preview (requires news.js loaded before script.js)
+  if (typeof NEWS !== 'undefined') {
+    renderNewsPreview(localStorage.getItem('dmd_lang') || 'ka');
+  }
 });
+
+/* ── News preview on index page ── */
+function renderNewsPreview(lang) {
+  const grid = document.getElementById('newsPreviewGrid');
+  if (!grid) return;
+  const preview = NEWS.slice(0, 3);
+  grid.innerHTML = preview.map(n => {
+    const loc  = n[lang] || n.ka;
+    const date = formatDate(n.date, lang);
+    const media = n.image
+      ? `<img class="news-preview-img" src="${n.image}" alt="${loc.title}" loading="lazy">`
+      : `<div class="news-preview-img-placeholder">${n.emoji || '📰'}</div>`;
+    return `
+    <a class="news-preview-card" href="news.html#${n.id}" style="text-decoration:none;color:inherit;">
+      ${media}
+      <div class="news-preview-body">
+        <div class="news-preview-date">${date}</div>
+        <div class="news-preview-title">${loc.title}</div>
+        <div class="news-preview-excerpt">${loc.excerpt}</div>
+        <span class="news-preview-link">→</span>
+      </div>
+    </a>`;
+  }).join('');
+}
