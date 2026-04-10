@@ -121,7 +121,7 @@ const translations = {
 
   ru: {
     headerSubtitle: "Вместе против Дюшенна",
-    nav1: "О нас", nav2: "Миссия", nav3: "Препараты", nav4: "Ресурсы", nav5: "Контакты", nav6: \"Новости\",
+    nav1: "О нас", nav2: "Миссия", nav3: "Препараты", nav4: "Ресурсы", nav5: "Контакты", nav6: "Новости",
     heroBadge: "DMD Georgia • Объединение родителей и пациентов",
     heroTitle: "Вместе против мышечной дистрофии Дюшенна",
     heroText: "Мышечная дистрофия Дюшенна (DMD) — редкое генетическое заболевание, вызывающее прогрессирующую слабость и разрушение мышц.",
@@ -244,6 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.main-nav a').forEach(link => {
     link.addEventListener('click', () => {
       document.getElementById('mainNav').classList.remove('open');
+      const hb = document.getElementById('hamburger');
+      if (hb) hb.classList.remove('is-open');
     });
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDonate(); });
@@ -282,7 +284,9 @@ function renderNewsPreview(lang) {
     const date = formatDate(n.date, lang);
     const media = n.image
       ? `<img class="news-preview-img" src="${n.image}" alt="${loc.title}" loading="lazy">`
-      : `<div class="news-preview-img-placeholder">${n.emoji || '📰'}</div>`;
+      : n.youtube
+        ? `<img class="news-preview-img" src="https://img.youtube.com/vi/${n.youtube}/mqdefault.jpg" alt="${loc.title}" loading="lazy">`
+        : `<div class="news-preview-img-placeholder">${n.emoji || '📰'}</div>`;
     return `
     <a class="news-preview-card" href="news.html#${n.id}" style="text-decoration:none;color:inherit;">
       ${media}
