@@ -5,142 +5,483 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DMD Parents Georgia</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
+
   <header class="header">
     <div class="container header-inner">
       <div class="brand">
-        <img src="logo.jpg" alt="DMD Georgia logo" class="logo" />
+        <div class="brand-logo">
+          <img src="logo.jpg" alt="DMD Georgia" class="logo"/>
+        </div>
         <div>
           <h1>DMD Parents Georgia</h1>
-          <p class="subtitle">Together Against Duchenne Muscular Dystrophy</p>
+          <p class="subtitle" id="headerSubtitle">ერთად ვებრძოლოთ დიუშენს</p>
         </div>
       </div>
 
-      <div class="lang-switcher">
-        <button class="lang-btn active" onclick="setLang('ka')">ქარ</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" onclick="setLang('ru')">RU</button>
+      <nav class="main-nav" id="mainNav">
+        <a href="#about" id="nav1">ჩვენ შესახებ</a>
+        <a href="#mission" id="nav2">მისია</a>
+        <a href="#drugs" id="nav3">პრეპარატები</a>
+        <a href="#world" id="nav4">რესურსები</a>
+        <a href="#contact" id="nav5">კონტაქტი</a>
+      </nav>
+
+      <div class="header-right">
+        <button class="btn-donate-header" onclick="openDonate()" id="donateBtnHeader">❤️ დახმარება</button>
+        <div class="lang-switcher">
+          <button class="lang-btn active" onclick="setLang('ka')">ქარ</button>
+          <button class="lang-btn" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" onclick="setLang('ru')">RU</button>
+        </div>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
 
+  <!-- DONATE MODAL -->
+  <div class="modal-overlay" id="donateModal" onclick="closeDonateOutside(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeDonate()">✕</button>
+      <div class="modal-icon">❤️</div>
+      <h2 class="modal-title" id="donateTitle">გამოიწერეთ ჩვენი საქმე</h2>
+      <p class="modal-desc" id="donateDesc">თქვენი შემოწირულობა ეხმარება DMD-ით დაავადებულ ოჯახებს — ინფორმაციის მიღებაში, სამედიცინო დახმარებასა და საზოგადოების ცნობიერების ამაღლებაში.</p>
+
+      <div class="donate-accounts">
+        <div class="donate-account">
+          <span class="donate-currency">🇬🇪 GEL</span>
+          <code class="donate-iban" onclick="copyIban(this)">GE34TB7967036080100020</code>
+          <span class="copy-hint" id="copyHint1">კოპირება</span>
+        </div>
+        <div class="donate-account">
+          <span class="donate-currency">🇺🇸 USD</span>
+          <code class="donate-iban" onclick="copyIban(this)">GE95TB7967036180100005</code>
+          <span class="copy-hint" id="copyHint2">კოპირება</span>
+        </div>
+        <div class="donate-account">
+          <span class="donate-currency">🇪🇺 EUR</span>
+          <code class="donate-iban" onclick="copyIban(this)">GE95TB7967036180100005</code>
+          <span class="copy-hint" id="copyHint3">კოპირება</span>
+        </div>
+      </div>
+
+      <div class="donate-bank">
+        <div class="bank-row"><span class="bank-label" id="bankLabel">ბანკი</span><span>JSC TBC Bank</span></div>
+        <div class="bank-row"><span class="bank-label">SWIFT/BIC</span><span>TBCBGE22</span></div>
+        <div class="bank-row"><span class="bank-label" id="bankAddrLabel">მისამართი</span><span>7 Kote Marjanishvili St, Tbilisi 0102</span></div>
+      </div>
+
+      <p class="donate-thanks" id="donateThanks">გმადლობთ თქვენი მხარდაჭერისთვის! 🙏</p>
+    </div>
+  </div>
+
   <main>
+
+    <!-- HERO -->
     <section class="hero">
-      <div class="container">
-        <p class="badge" id="heroBadge">DMD Georgia • Объединение родителей и пациентов</p>
-        <h2 id="heroTitle">Вместе против мышечной дистрофии Дюшенна</h2>
-        <p class="hero-text" id="heroText">
-          Мышечная дистрофия Дюшенна (DMD) — редкое генетическое заболевание,
-          вызывающее прогрессирующую слабость и разрушение мышц.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="mailto:info@dmdparentsgeorgia.com" id="contactBtn">Связаться с нами</a>
-          <a class="btn btn-secondary" href="https://www.facebook.com/431118296750583/" target="_blank">Facebook</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container grid-2">
-        <div class="card">
-          <h3 id="aboutTitle">Что такое DMD?</h3>
-          <p id="aboutText">
-            DMD — прогрессирующее генетическое заболевание, которое чаще всего
-            проявляется в детском возрасте и со временем влияет на подвижность,
-            дыхание и работу сердца.
+      <div class="hero-bg"></div>
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <span class="badge" id="heroBadge">DMD Georgia • Объединение родителей и пациентов</span>
+          <h2 id="heroTitle">Вместе против мышечной дистрофии <em>Дюшенна</em></h2>
+          <p class="hero-text" id="heroText">
+            Мышечная дистрофия Дюшенна (DMD) — редкое генетическое заболевание,
+            вызывающее прогрессирующую слабость и разрушение мышц.
           </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:info@dmdparentsgeorgia.com" id="contactBtn">დაგვიკავშირდი</a>
+            <button class="btn btn-donate" onclick="openDonate()" id="donateBtnHero">❤️ მხარი დაუჭირე</button>
+            <a class="btn btn-outline" href="https://www.facebook.com/431118296750583/" target="_blank" id="fbBtn">Facebook</a>
+          </div>
         </div>
-
-        <div class="card">
-          <h3 id="orgTitle">Наша организация</h3>
-          <p id="orgText">
-            Наша организация является некоммерческим юридическим лицом и
-            объединяет семьи, родителей и близких людей, столкнувшихся с DMD.
-          </p>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-num">1:5000</span>
+            <span class="stat-label" id="stat1">Встречаемость у мальчиков</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">8+</span>
+            <span class="stat-label" id="stat2">Одобренных препаратов</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">60+</span>
+            <span class="stat-label" id="stat3">Активных испытаний</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section light">
+    <!-- ABOUT -->
+    <section class="section" id="about">
       <div class="container">
-        <h3 id="missionTitle">Что мы делаем</h3>
-        <div class="cards">
-          <div class="card" id="mission1">Повышаем осведомлённость общества о заболевании</div>
-          <div class="card" id="mission2">Помогаем семьям получить медицинскую помощь</div>
-          <div class="card" id="mission3">Объединяем семьи и волонтёров</div>
-          <div class="card" id="mission4">Организуем благотворительные и информационные кампании</div>
-          <div class="card" id="mission5">Сотрудничаем с государственными структурами</div>
+        <div class="section-header">
+          <span class="section-tag" id="aboutTag">О заболевании</span>
+          <h3 class="section-title" id="aboutTitle">Что такое DMD?</h3>
+        </div>
+        <div class="grid-2">
+          <div class="card card-accent">
+            <div class="card-icon">🧬</div>
+            <h4 id="aboutCardTitle">Генетическая основа</h4>
+            <p id="aboutText">DMD — прогрессирующее генетическое заболевание, которое чаще всего проявляется в детском возрасте и со временем влияет на подвижность, дыхание и работу сердца.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🏛️</div>
+            <h4 id="orgTitle">Наша организация</h4>
+            <p id="orgText">Наша организация является некоммерческим юридическим лицом и объединяет семьи, родителей и близких людей, столкнувшихся с DMD.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container grid-2">
-        <div class="card accent">
-          <h3 id="helpTitle">Как вы можете помочь</h3>
-          <ul class="list">
-            <li id="help1">Стать волонтёром</li>
-            <li id="help2">Распространить информацию</li>
-            <li id="help3">Поддержать семьи</li>
-            <li id="help4">Предложить новые идеи и проекты</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3 id="supportTitle">Помощь семьям</h3>
-          <ul class="list">
-            <li id="support1">Свяжитесь с нами по почте или телефону</li>
-            <li id="support2">Подготовьте анализы и заключения врачей</li>
-            <li id="support3">Получите ориентир по следующим шагам</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="section light">
+    <!-- MISSION -->
+    <section class="section section-dark" id="mission">
       <div class="container">
-        <h3 id="worldTitle">DMD в мире</h3>
-        <p id="worldText">
-          Отдельный раздел для международной информации: стандарты ведения,
-          ресурсы для семей, защита прав пациентов и клинические исследования.
-        </p>
+        <div class="section-header">
+          <span class="section-tag" id="missionTag">Наша деятельность</span>
+          <h3 class="section-title" id="missionTitle">Что мы делаем</h3>
+        </div>
+        <div class="mission-grid">
+          <div class="mission-card">
+            <span class="mission-num">01</span>
+            <p id="mission1">Повышаем осведомлённость общества о заболевании</p>
+          </div>
+          <div class="mission-card">
+            <span class="mission-num">02</span>
+            <p id="mission2">Помогаем семьям получить медицинскую помощь</p>
+          </div>
+          <div class="mission-card">
+            <span class="mission-num">03</span>
+            <p id="mission3">Объединяем семьи и волонтёров</p>
+          </div>
+          <div class="mission-card">
+            <span class="mission-num">04</span>
+            <p id="mission4">Организуем благотворительные и информационные кампании</p>
+          </div>
+          <div class="mission-card">
+            <span class="mission-num">05</span>
+            <p id="mission5">Сотрудничаем с государственными структурами</p>
+          </div>
+        </div>
 
-        <div class="links">
-          <a href="https://www.worldduchenne.org/" target="_blank">World Duchenne Organization</a>
-          <a href="https://www.parentprojectmd.org/" target="_blank">Parent Project Muscular Dystrophy</a>
-          <a href="https://www.cdc.gov/muscular-dystrophy/index.html" target="_blank">CDC</a>
-          <a href="https://clinicaltrials.gov/search?cond=Duchenne%20Muscular%20Dystrophy" target="_blank">ClinicalTrials.gov</a>
-          <a href="https://www.un.org/en/observances/duchenne-awareness-day" target="_blank">UN Awareness Day</a>
+        <div class="help-grid">
+          <div class="help-block">
+            <h4 id="helpTitle">Как вы можете помочь</h4>
+            <ul class="list">
+              <li id="help1">Стать волонтёром</li>
+              <li id="help2">Распространить информацию</li>
+              <li id="help3">Поддержать семьи</li>
+              <li id="help4">Предложить новые идеи и проекты</li>
+            </ul>
+          </div>
+          <div class="help-block">
+            <h4 id="supportTitle">Помощь семьям</h4>
+            <ul class="list">
+              <li id="support1">Свяжитесь с нами по почте или телефону</li>
+              <li id="support2">Подготовьте анализы и заключения врачей</li>
+              <li id="support3">Получите ориентир по следующим шагам</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container grid-2">
-        <div class="card">
-          <h3 id="contactTitle">Контакты</h3>
-          <p><strong>Email:</strong> <a href="mailto:info@dmdparentsgeorgia.com">info@dmdparentsgeorgia.com</a></p>
-          <p><strong>Телефон:</strong> <a href="tel:+995595145511">+995 595 145 511</a></p>
-          <p><strong>Адрес:</strong> <span id="addressText">Тбилиси, Грузия</span></p>
+    <!-- DRUGS -->
+    <section class="section" id="drugs">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" id="drugsTag">Наука и медицина</span>
+          <h3 class="section-title" id="drugsTitle">Препараты и исследования</h3>
+          <p class="section-desc" id="drugsDesc">Актуальная информация о статусе препаратов: одобренные регуляторами и находящиеся в разработке.</p>
         </div>
 
-        <div class="card">
-          <h3 id="legalTitle">Юридическая информация</h3>
-          <ul class="list">
-            <li id="legal1">Организационно-правовая форма: некоммерческое юридическое лицо</li>
-            <li id="legal2">Идентификационный номер: 400419221</li>
-            <li id="legal3">Дата регистрации: 27/01/2025</li>
-          </ul>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterDrugs('all', this)" id="fAll">Все</button>
+          <button class="filter-btn" onclick="filterDrugs('approved', this)" id="fApproved">✓ Одобрены</button>
+          <button class="filter-btn" onclick="filterDrugs('phase3', this)" id="fPhase3">Фаза 3</button>
+          <button class="filter-btn" onclick="filterDrugs('phase2', this)" id="fPhase2">Фаза 2</button>
+          <button class="filter-btn" onclick="filterDrugs('phase1', this)" id="fPhase1">Фаза 1</button>
+        </div>
+
+        <div class="drugs-list" id="drugsGrid">
+
+          <div class="drug-card" data-status="approved">
+            <div class="drug-status-bar approved"></div>
+            <div class="drug-body">
+              <div class="drug-header">
+                <div>
+                  <span class="drug-name">Elevidys</span>
+                  <span class="drug-generic">delandistrogene moxeparvovec</span>
+                </div>
+                <div class="drug-badges">
+                  <span class="status-pill approved" id="approvedLabel1">Одобрен</span>
+                  <span class="country-pill">🇺🇸 США</span>
+                </div>
+              </div>
+              <p class="drug-company" id="drugCompLabel">Компания:</p>
+              <p class="drug-company-name">Sarepta Therapeutics</p>
+              <p class="drug-desc" id="elevidysDesc">Первая в мире генная терапия при DMD, одобренная FDA (2023, расширена 2024). Однократное введение — доставляет ген микро-дистрофина в мышцы через AAV-вектор. Показан амбулаторным пациентам от 4 лет. В 2025 FDA обновил инструкцию: добавлено предупреждение о риске острого поражения печени.</p>
+              <div class="drug-tags">
+                <span class="drug-tag">Генная терапия</span>
+                <span class="drug-tag">Экзон 8/9 (противопоказание)</span>
+                <span class="drug-tag">От 4 лет</span>
+              </div>
+              <a class="drug-link" href="https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapy-treatment-duchenne-muscular-dystrophy" target="_blank" id="officialLink1">Официальное решение FDA →</a>
+            </div>
+          </div>
+
+          <div class="drug-card" data-status="approved">
+            <div class="drug-status-bar approved"></div>
+            <div class="drug-body">
+              <div class="drug-header">
+                <div>
+                  <span class="drug-name">Agamree (Vamorolone)</span>
+                  <span class="drug-generic">vamorolone</span>
+                </div>
+                <div class="drug-badges">
+                  <span class="status-pill approved" id="approvedLabel2">Одобрен</span>
+                  <span class="country-pill">🇺🇸 США</span>
+                  <span class="country-pill">🇨🇦 Канада</span>
+                </div>
+              </div>
+              <p class="drug-company" id="drugCompLabel2">Компания:</p>
+              <p class="drug-company-name">Santhera Pharmaceuticals</p>
+              <p class="drug-desc" id="agamreeDesc">Стероидный противовоспалительный препарат нового класса. Одобрен FDA в 2023 году для пациентов от 2 лет. В 2025 году Health Canada одобрило применение в Канаде. Обеспечивает преимущества кортикостероидов с меньшим количеством побочных эффектов.</p>
+              <div class="drug-tags">
+                <span class="drug-tag">Противовоспалительный</span>
+                <span class="drug-tag">От 2 лет</span>
+                <span class="drug-tag">Стероид нового класса</span>
+              </div>
+              <a class="drug-link" href="https://www.fda.gov/drugs/news-events-human-drugs/fda-approves-vamorolone-duchenne-muscular-dystrophy" target="_blank" id="officialLink2">Официальное решение FDA →</a>
+            </div>
+          </div>
+
+          <div class="drug-card" data-status="approved">
+            <div class="drug-status-bar approved"></div>
+            <div class="drug-body">
+              <div class="drug-header">
+                <div>
+                  <span class="drug-name">Exondys 51 / Vyondys 53 / Amondys 45</span>
+                  <span class="drug-generic">eteplirsen / golodirsen / casimersen</span>
+                </div>
+                <div class="drug-badges">
+                  <span class="status-pill approved">Одобрены FDA</span>
+                  <span class="country-pill">🇺🇸 США</span>
+                </div>
+              </div>
+              <p class="drug-company-name">Sarepta Therapeutics</p>
+              <p class="drug-desc" id="exondysDesc">Группа одобренных FDA препаратов для «пропуска экзонов» (exon skipping) — технология восстановления производства укороченного дистрофина. Exondys 51 (2016) — для пропуска экзона 51 (~14% пациентов). Vyondys 53 (2019) и Amondys 45 (2021) расширили охват до экзонов 53 и 45.</p>
+              <div class="drug-tags">
+                <span class="drug-tag">Пропуск экзонов</span>
+                <span class="drug-tag">Экзоны 45, 51, 53</span>
+                <span class="drug-tag">~31% пациентов</span>
+              </div>
+              <a class="drug-link" href="https://www.parentprojectmd.org/duchenne-drug-development-pipeline/" target="_blank" id="officialLink3">Пайплайн препаратов PPMD →</a>
+            </div>
+          </div>
+
+          <div class="drug-card" data-status="phase3">
+            <div class="drug-status-bar phase3"></div>
+            <div class="drug-body">
+              <div class="drug-header">
+                <div>
+                  <span class="drug-name">DYNE-251</span>
+                  <span class="drug-generic">AOC-технология, пропуск экзона 51</span>
+                </div>
+                <div class="drug-badges">
+                  <span class="status-pill phase3">Фаза 1/2 → BLA 2026</span>
+                  <span class="country-pill">🇺🇸 США</span>
+                </div>
+              </div>
+              <p class="drug-company-name">Dyne Therapeutics</p>
+              <p class="drug-desc" id="dyne251Desc">Получил статус «Прорывная терапия» (Breakthrough Therapy) от FDA в августе 2025 года. Новое поколение пропуска экзона 51 — достигает в 10+ раз большего уровня дистрофина по сравнению с Exondys 51. Регистрационное расширение завершило набор 32 пациентов. Подача заявки на ускоренное одобрение BLA ожидается в начале 2026 года.</p>
+              <div class="drug-tags">
+                <span class="drug-tag">Пропуск экзона 51</span>
+                <span class="drug-tag">Breakthrough Therapy</span>
+                <span class="drug-tag">BLA ожидается 2026</span>
+              </div>
+              <a class="drug-link" href="https://investors.dyne-tx.com/news-releases/news-release-details/dyne-therapeutics-announces-fda-breakthrough-therapy-0/" target="_blank" id="officialLink4">Пресс-релиз Dyne Therapeutics →</a>
+            </div>
+          </div>
+
+          <div class="drug-card" data-status="phase3">
+            <div class="drug-status-bar phase3"></div>
+            <div class="drug-body">
+              <div class="drug-header">
+                <div>
+                  <span class="drug-name">Del-zota (delpacibart zotadirsen)</span>
+                  <span class="drug-generic">AOC, пропуск экзона 44</span>
+                </div>
+                <div class="drug-badges">
+                  <span class="status-pill phase3">Фаза 1/2 → BLA 2026</span>
+                  <span class="country-pill">🇺🇸 США</span>
+                </div>
+              </div>
+              <p class="drug-company-name">Avidity Biosciences</p>
+              <p class="drug-desc" id="delzotaDesc">Первый препарат класса AOC (Antibody Oligonucleotide Conjugate) для экзона 44 (~6% пациентов). Получил статус «Прорывная терапия» от FDA в 2025 году. В испытании EXPLORE44 показал уровень дистрофина до 25% от нормы — лучший результат среди всех препаратов для пропуска экзонов. Подача BLA планируется в середине 2026 года.</p>
+              <div class="drug-tags">
+                <span class="drug-tag">Пропуск экзона 44</span>
+                <span class="drug-tag">Breakthrough Therapy</span>
+                <span class="drug-tag">25% дистрофина</span>
+              </div>
+              <a class="drug-link" href="https://www.drugdiscoverynews.com/fda-grants-breakthrough-therapy-designation-to-first-in-class-aoc-therapeutic-for-duchenne-muscular-dystrophy-16530" target="_blank" id="officialLink5">Подробнее о del-zota →</a>
+            </div>
+          </div>
+
+          <div class="drug-card" data-status="phase2">
+            <div class="drug-status-bar phase2"></div>
+            <div class="drug-body">
+              <div class="drug-header">
+                <div>
+                  <span class="drug-name">RGX-202</span>
+                  <span class="drug-generic">генная терапия, микро-дистрофин</span>
+                </div>
+                <div class="drug-badges">
+                  <span class="status-pill phase2">Фаза 1/2 · BLA 2026</span>
+                  <span class="country-pill">🇺🇸 США</span>
+                </div>
+              </div>
+              <p class="drug-company-name">REGENXBIO</p>
+              <p class="drug-desc" id="rgx202Desc">Генная терапия на основе AAV8-вектора с увеличенным геном микро-дистрофина. Охватывает более широкую популяцию пациентов, чем Elevidys. Испытание AFFINITY DUCHENNE включает детей от 1 года. Ранние данные 2024 года показали обнадёживающие результаты по силе мышц. Подача BLA планируется в 2026 году.</p>
+              <div class="drug-tags">
+                <span class="drug-tag">Генная терапия</span>
+                <span class="drug-tag">От 1 года</span>
+                <span class="drug-tag">AAV8-вектор</span>
+              </div>
+              <a class="drug-link" href="https://www.biospace.com/drug-development/5-dmd-candidates-to-watch-in-2025" target="_blank" id="officialLink6">Обзор 5 ключевых препаратов 2025 →</a>
+            </div>
+          </div>
+
+          <div class="drug-card" data-status="phase1">
+            <div class="drug-status-bar phase1"></div>
+            <div class="drug-body">
+              <div class="drug-header">
+                <div>
+                  <span class="drug-name">PBGENE-DMD</span>
+                  <span class="drug-generic">генное редактирование, платформа ARCUS</span>
+                </div>
+                <div class="drug-badges">
+                  <span class="status-pill phase1">Фаза 1/2 · старт 2026</span>
+                  <span class="country-pill">🇺🇸 США</span>
+                </div>
+              </div>
+              <p class="drug-company-name">Precision BioSciences</p>
+              <p class="drug-desc" id="pbgeneDesc">FDA выдал разрешение на начало испытаний (IND) в феврале 2026 года. Первое in vivo генное редактирование при DMD с помощью технологии ARCUS. Нацелен на экзоны 45–55 (до 60% всех пациентов с DMD). Потенциально однократное лечение с долгосрочным эффектом. Первые данные по эффективности ожидаются в конце 2026 года.</p>
+              <div class="drug-tags">
+                <span class="drug-tag">Генное редактирование</span>
+                <span class="drug-tag">Экзоны 45–55</span>
+                <span class="drug-tag">До 60% пациентов</span>
+              </div>
+              <a class="drug-link" href="https://investor.precisionbiosciences.com/news-releases/news-release-details/precision-biosciences-receives-us-fda-clearance-investigational" target="_blank" id="officialLink7">Пресс-релиз Precision BioSciences →</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="drugs-disclaimer" id="drugsDisclaimer">
+          * Информация обновлена по состоянию на апрель 2026 г. Для принятия медицинских решений обращайтесь к врачу.
         </div>
       </div>
     </section>
+
+    <!-- WORLD -->
+    <section class="section section-light" id="world">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" id="worldTag">Международные ресурсы</span>
+          <h3 class="section-title" id="worldTitle">DMD в мире</h3>
+          <p class="section-desc" id="worldText">Стандарты ведения, ресурсы для семей, защита прав пациентов и клинические исследования.</p>
+        </div>
+        <div class="links-grid">
+          <a class="ext-link" href="https://www.worldduchenne.org/" target="_blank">
+            <span class="ext-icon">🌍</span>
+            <span>World Duchenne Organization</span>
+          </a>
+          <a class="ext-link" href="https://www.parentprojectmd.org/" target="_blank">
+            <span class="ext-icon">👨‍👩‍👧</span>
+            <span>Parent Project MD</span>
+          </a>
+          <a class="ext-link" href="https://www.cdc.gov/muscular-dystrophy/index.html" target="_blank">
+            <span class="ext-icon">🏛️</span>
+            <span>CDC</span>
+          </a>
+          <a class="ext-link" href="https://clinicaltrials.gov/search?cond=Duchenne%20Muscular%20Dystrophy" target="_blank">
+            <span class="ext-icon">🔬</span>
+            <span>ClinicalTrials.gov</span>
+          </a>
+          <a class="ext-link" href="https://www.un.org/en/observances/duchenne-awareness-day" target="_blank">
+            <span class="ext-icon">🇺🇳</span>
+            <span>UN Awareness Day</span>
+          </a>
+          <a class="ext-link" href="https://www.parentprojectmd.org/duchenne-drug-development-pipeline/" target="_blank">
+            <span class="ext-icon">💊</span>
+            <span>Drug Pipeline PPMD</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" id="contactTag">Связь</span>
+          <h3 class="section-title" id="contactTitle">Контакты</h3>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-icon">📬</div>
+            <h4 id="contactInfoTitle">Свяжитесь с нами</h4>
+            <div class="contact-list">
+              <div class="contact-row">
+                <span class="contact-label">Email</span>
+                <a href="mailto:info@dmdparentsgeorgia.com">info@dmdparentsgeorgia.com</a>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label" id="phoneLabel">Телефон</span>
+                <a href="tel:+995595145511">+995 595 145 511</a>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label" id="addrLabel">Адрес</span>
+                <span id="addressText">Тбилиси, Грузия</span>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label">Facebook</span>
+                <a href="https://www.facebook.com/431118296750583/" target="_blank">DMD Parents Georgia</a>
+              </div>
+            </div>
+          </div>
+          <div class="card card-dark">
+            <div class="card-icon">📋</div>
+            <h4 id="legalTitle">Юридическая информация</h4>
+            <div class="legal-list">
+              <div class="legal-row">
+                <span class="legal-label" id="legalFormLabel">Форма</span>
+                <span id="legal1">Некоммерческое юридическое лицо</span>
+              </div>
+              <div class="legal-row">
+                <span class="legal-label" id="legalIdLabel">ID номер</span>
+                <span id="legal2">400419221</span>
+              </div>
+              <div class="legal-row">
+                <span class="legal-label" id="legalDateLabel">Регистрация</span>
+                <span id="legal3">27/01/2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="footer">
     <div class="container footer-inner">
-      <p>© 2026 DMD Georgia</p>
-      <a href="https://www.facebook.com/431118296750583/" target="_blank">Facebook Group</a>
+      <p>© 2026 DMD Parents Georgia</p>
+      <a href="https://www.facebook.com/431118296750583/" target="_blank" id="footerFb">Facebook Group</a>
     </div>
   </footer>
 
